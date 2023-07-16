@@ -31,7 +31,7 @@ jobs:
             any::rvest
             
       - name: Scrape
-        run: source("sitemap_scraping.R")
+        run: source(".R")
         shell: Rscript {0}
         
       - name: Commit files
