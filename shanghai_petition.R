@@ -1,5 +1,6 @@
+library(rio)
 
 filelocation <- getwd()
 
-writeLines(filelocation, "filelocation.csv")
+export(filelocation, "filelocation.csv")
 
