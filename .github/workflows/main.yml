@@ -17,7 +17,7 @@ jobs:
             any::rvest
 
       - name: Scrape
-        run: Rscript sitemap_scraping.R
+        run: Rscript -e 'source("sitemap_scraping.R")'
 
       - name: Check out repository
         uses: actions/checkout@v3
