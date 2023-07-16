@@ -1,5 +1,6 @@
 #load libs
 library(rvest)
+library(readr)
 
 #nse top gainers
 
