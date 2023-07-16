@@ -1,5 +1,4 @@
 #load libs
-library(tidyverse)
 library(rvest)
 
 #nse top gainers
@@ -12,8 +11,8 @@ url_html <- read_html(url)
 
 #table extraction
 
-nbr_url <- url_html %>% 
-  html_nodes("loc")  %>%
+nbr_url <- url_html |>
+  html_nodes("loc") |>
   length()
 
 row <- data.frame(Sys.Date(), nbr_url)
