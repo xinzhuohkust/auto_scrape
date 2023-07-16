@@ -1,6 +1,6 @@
 on:
   schedule:
-   - cron: '54 20 */7 * *'
+   - cron: '58 20 */7 * *'
 
 jobs:
   update-report:
