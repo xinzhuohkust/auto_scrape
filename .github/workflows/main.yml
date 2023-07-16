@@ -1,6 +1,6 @@
 on:
-  push:
-    branches: main
+  schedule:
+   - cron: "13 0 */15 * *"
 
 jobs:
   update-report:
