@@ -14,18 +14,22 @@ jobs:
         with:
           packages: |
             any::tidyverse 
-            any::googlesheets4
-            any::gt
+            any::rvest
 
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
+      - name: Scrape
+        run: Rscript sitemap_scraping.R
 
       - name: Check out repository
         uses: actions/checkout@v3
         
-      - name: Render and Publish to Netlify
-        uses: quarto-dev/quarto-actions/publish@v2
-        with:
-          target: netlify
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      - name: Commit files
+        run: |
+          git config --local user.name actions-user
+          git config --local user.email "actions@github.com"
+          git add data/*
+          git commit -am "GH ACTION Headlines $(date)"
+          git push origin main
+        env:
+          REPO_KEY: ${{secrets.GITHUB_TOKEN}}
+          username: github-actions
 
