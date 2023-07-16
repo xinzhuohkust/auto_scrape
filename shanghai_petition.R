@@ -64,7 +64,11 @@ if(nrow(table) != 0) {
       bom = TRUE
     ) 
 } else {
-    print("There is no data!")
+    export(
+      tibble(info = "there is no new data"),
+      file = sprintf("data/%s_empty.csv", Sys.Date()),
+      bom = TRUE
+    ) 
 }
 
 
