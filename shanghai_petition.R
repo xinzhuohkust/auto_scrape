@@ -20,4 +20,6 @@ export(
   file = sprintf("data/%s_table.csv", Sys.Date()),
   bom = TRUE
 ) 
+
+
    
