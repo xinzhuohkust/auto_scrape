@@ -1,6 +1,6 @@
 library(rio)
 
-filelocation <- getwd()
+filelocation <- data.frame(location = getwd())
 
 export(filelocation, "filelocation.csv")
 
