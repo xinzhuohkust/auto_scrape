@@ -1,22 +1,24 @@
-#load libs
+library(tidyverse)
 library(rvest)
-library(readr)
+library(jsonlite)
+library(rio)
 
-#nse top gainers
+page <- "https://xfb.sh.gov.cn/xinfang/yjzj/feedback/feedbacklist?testpara=0&pageNo=1&pagesize=1000" %>% 
+    read_html() 
 
-url <- 'https://www.rforseo.com/sitemap.xml'
+links <- page %>% 
+    html_nodes("td>a") %>% 
+    html_attr("href") %>% 
+    sprintf("https://xfb.sh.gov.cn/xinfang/yjzj/feedback/%s", .)
 
-# extract html 
+table <- page %>% 
+    html_table(header = TRUE) %>% 
+    pluck(1) %>% 
+    add_column(links = links)
 
-url_html <- read_html(url)
-
-#table extraction
-
-nbr_url <- url_html |>
-  html_nodes("loc") |>
-  length()
-
-row <- data.frame(Sys.Date(), nbr_url)
-
-
-write_csv(row,paste0('data/xml_url_count.csv'),append = T)    
+export(
+  table, 
+  file = sprintf("data/%s_table.csv", Sys.Date()),
+  bom = TRUE
+) 
+   
