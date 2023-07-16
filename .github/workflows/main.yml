@@ -18,9 +18,17 @@ jobs:
           packages: |
             any::readr
             any::rvest
-
+            
+      - uses: actions/cache@v2 # Cache packages so won't be compiled everytime job is run
+        with:
+          path: ~/.local/share/renv
+          key: ${{ runner.os }}-renv-${{ hashFiles('**/renv.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-renv-
+      
       - name: Scrape
-        run: Rscript sitemap_scraping.R
+        run: source("R/sitemap_scraping.R")
+        shell: Rscript {0}
 
       - name: Check out repository
         uses: actions/checkout@v3
