@@ -46,3 +46,25 @@ get_contents <- possibly(
     )
 )
 
+done <- list.files("/home/runner/work/auto_scrape/auto_scrape/data", pattern = "table", full.names = TRUE) %>% 
+    import(setclass = "tibble")
+
+table <- table %>% 
+    anti_join(done, "links")
+
+if(nrow(table) != 0) {
+    table <- table %>% 
+        set_names(c("title", "agency", "date", "links")) %>% 
+        mutate(data = map(links, get_contents, .progress = TRUE)) %>% 
+        unnest(data)
+    
+    export(
+      table, 
+      file = sprintf("data/%s_table.csv", Sys.Date()),
+      bom = TRUE
+    ) 
+} else {
+    print("There is no data!")
+}
+
+
