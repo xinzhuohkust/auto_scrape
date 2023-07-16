@@ -1,1 +1,31 @@
+on:
+  push:
+    branches: main
+
+jobs:
+  update-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install packages
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            any::tidyverse 
+            any::googlesheets4
+            any::gt
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Check out repository
+        uses: actions/checkout@v3
+        
+      - name: Render and Publish to Netlify
+        uses: quarto-dev/quarto-actions/publish@v2
+        with:
+          target: netlify
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
