@@ -46,7 +46,9 @@ get_contents <- possibly(
     )
 )
 
-done <- list.files("data", pattern = "csv", full.names = TRUE) %>% 
+getwd()
+
+done <- list.files("~/data", pattern = "csv", full.names = TRUE) %>% 
     import(setclass = "tibble")
 
 table <- table %>% 
