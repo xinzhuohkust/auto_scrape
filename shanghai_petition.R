@@ -47,7 +47,8 @@ get_contents <- possibly(
 )
 
 done <- list.files("/home/runner/work/auto_scrape/auto_scrape/data", pattern = "table", full.names = TRUE) %>% 
-    import(setclass = "tibble")
+    map_dfr(~import(., setclass = "tibble"))
+    
 
 table <- table %>% 
     anti_join(done, "links")
