@@ -69,8 +69,9 @@ done <- list.files("/home/runner/work/auto_scrape/auto_scrape/data", pattern = "
   map(\(x) mutate(x, across(everything(), as.character))) %>% 
   bind_rows() %>% 
   mutate(across(everything(), ~ na_if(., "error!"))) %>% 
-  filter(complete.cases(.)) %>% 
-  distinct(links, .keep_all = TRUE)
+  distinct(links, .keep_all = TRUE) %>% 
+  filter(complete.cases(.)) 
+  
 
 table <- table %>% 
   anti_join(done, "links")
