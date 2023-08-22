@@ -50,7 +50,8 @@ get_contents <- possibly(
     
     result <- contents %>%
       as_tibble_row() %>%
-      add_column(标题, .before = 1)
+      add_column(标题, .before = 1) %>% 
+      mutate(across(everything(), as.character))
     
     Sys.sleep(sample(1:2, 1))
     
@@ -63,8 +64,10 @@ get_contents <- possibly(
   )
 )
 
-done <- list.files("/home/runner/work/auto_scrape/auto_scrape/data", pattern = "table", full.names = TRUE) %>% 
-  map_dfr(~import(., setclass = "tibble")) %>% 
+done <- list.files("R:/temp/action_test", pattern = "table", full.names = TRUE) %>% 
+  map(~ import(., setclass = "tibble")) %>% 
+  map(\(x) mutate(x, across(everything(), as.character))) %>% 
+  bind_rows() %>% 
   mutate(across(everything(), ~ na_if(., "error!"))) %>% 
   filter(complete.cases(.))
 
