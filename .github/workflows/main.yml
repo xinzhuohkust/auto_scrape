@@ -32,6 +32,7 @@ jobs:
             any::tidyverse
             any::rio
             any::rvest
+            any::httr2
             
       - name: Scrape
         run: source("shanghai_petition.R")
