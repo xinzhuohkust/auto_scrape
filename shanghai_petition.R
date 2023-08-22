@@ -64,7 +64,7 @@ get_contents <- possibly(
   )
 )
 
-done <- list.files("R:/temp/action_test", pattern = "table", full.names = TRUE) %>% 
+done <- list.files("/home/runner/work/auto_scrape/auto_scrape/data", pattern = "table", full.names = TRUE) %>% 
   map(~ import(., setclass = "tibble")) %>% 
   map(\(x) mutate(x, across(everything(), as.character))) %>% 
   bind_rows() %>% 
